@@ -33,7 +33,7 @@ class ElecPotential_fourier_solvation:
         elif np.shape(cell) == (3, 3):
             self.cell = cell
         else:
-            raise PermissionError("Unsupporting cell format. Only [x, y, z, alpha, beta, gamma] or 3*3 matrix is permitted.")
+            raise PermissionError("Unsupported cell format. Only [x, y, z, alpha, beta, gamma] or 3*3 matrix is supported.")
         self.z_coord = z_coord
         self.spread_dict = spread_dict
         self.charge_dict = charge_dict
@@ -94,7 +94,6 @@ class ElecPotential_fourier_solvation:
             spread = np.array([spread_dict[s] for s in atoms.symbols])
             charge = np.array([charge_dict[s] for s in atoms.symbols])
             # Calculate Electrostatic Potential with Fourier Series Expansion
-
             phi_frame = np.zeros(len(self.z_coord), dtype=np.complex128)
             for nk in np.concatenate((np.arange(-self.n_k_vectors, 0), np.arange(1, self.n_k_vectors+1))):
                 k_n = 2*np.pi/l_box*nk
