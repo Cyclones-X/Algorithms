@@ -98,8 +98,8 @@ class ElecPotential_fourier_solvation:
             for nk in np.concatenate((np.arange(-self.n_k_vectors, 0), np.arange(1, self.n_k_vectors+1))):
                 k_n = 2*np.pi/l_box*nk
                 ft_trans_density = 1/XY_Plane_Area*charge*np.exp(-1j*k_n*mu_z)*np.exp(-k_n**2/4*(2*spread**2))
-                ft_trans_density_k_n = 1/(EPSILON*k_n**2)*np.sum(ft_trans_density)
-                phi_kn = 1/l_box*np.exp(1j*k_n*z_coord)*ft_trans_density_k_n
+                ft_trans_potential_k_n = 1/(EPSILON*k_n**2)*np.sum(ft_trans_density)
+                phi_kn = 1/l_box*np.exp(1j*k_n*z_coord)*ft_trans_potential_k_n
                 phi_frame += phi_kn
             phi_frame = np.real(phi_frame)
             phi += phi_frame
