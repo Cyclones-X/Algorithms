@@ -1,3 +1,4 @@
+# Function 
 import ase
 import ase.atom
 import numpy as np
@@ -33,7 +34,7 @@ class ElecPotential_fourier_solvation:
         elif np.shape(cell) == (3, 3):
             self.cell = cell
         else:
-            raise PermissionError("Unsupported cell format. Only [x, y, z, alpha, beta, gamma] or 3*3 matrix is supported.")
+            raise PermissionError("Unsupporting cell format. Only [x, y, z, alpha, beta, gamma] or 3*3 matrix is permitted.")
         self.z_coord = z_coord
         self.spread_dict = spread_dict
         self.charge_dict = charge_dict
@@ -62,7 +63,7 @@ class ElecPotential_fourier_solvation:
             charge = np.array([charge_dict[s] for s in atoms.symbols])
             # Calculate charge density with Fourier Series Expansion
             rho_frame = np.zeros(len(self.z_coord), dtype=np.complex128)
-            for nk in np.concatenate((np.arange(-self.n_k_vectors, 0), np.arange(1, self.n_k_vectors+1))):
+            for nk in np.arange(-self.n_k_vectors, self.n_k_vectors+1): # With k=0, considering the non-neutral conditions
                 k_n = 2*np.pi/l_box*nk
                 ft_trans_density = 1/XY_Plane_Area*charge*np.exp(-1j*k_n*mu_z)*np.exp(-k_n**2/4*(2*spread**2))
                 ft_trans_density_k_n = np.sum(ft_trans_density)
@@ -94,12 +95,13 @@ class ElecPotential_fourier_solvation:
             spread = np.array([spread_dict[s] for s in atoms.symbols])
             charge = np.array([charge_dict[s] for s in atoms.symbols])
             # Calculate Electrostatic Potential with Fourier Series Expansion
+
             phi_frame = np.zeros(len(self.z_coord), dtype=np.complex128)
             for nk in np.concatenate((np.arange(-self.n_k_vectors, 0), np.arange(1, self.n_k_vectors+1))):
                 k_n = 2*np.pi/l_box*nk
                 ft_trans_density = 1/XY_Plane_Area*charge*np.exp(-1j*k_n*mu_z)*np.exp(-k_n**2/4*(2*spread**2))
-                ft_trans_potential_k_n = 1/(EPSILON*k_n**2)*np.sum(ft_trans_density)
-                phi_kn = 1/l_box*np.exp(1j*k_n*z_coord)*ft_trans_potential_k_n
+                ft_trans_density_k_n = 1/(EPSILON*k_n**2)*np.sum(ft_trans_density)
+                phi_kn = 1/l_box*np.exp(1j*k_n*z_coord)*ft_trans_density_k_n
                 phi_frame += phi_kn
             phi_frame = np.real(phi_frame)
             phi += phi_frame
