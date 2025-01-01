@@ -3,10 +3,8 @@ import ase
 import ase.atom
 import numpy as np
 from ase import io
-import matplotlib.pyplot as plt
 from scipy import constants
 from ase.geometry.cell import cellpar_to_cell
-from scipy import fft
 
 # AU
 AU_TO_ANG = 5.29177208590000e-01
@@ -75,10 +73,10 @@ class ElecPotential_fourier_solvation:
         rho = rho/len(trajectory) # Average of trajectory. 
         return (z_coord, rho)
     
-    def Electrostatic_potential(self):  # Solve Poisson Equation  -∇²φ = ρ/ε₀
+    def Electrostatic_potential(self):  # Solve Poisson Equation  -∇²φ = ρ/ε₀, and multiply a electronic charge (-e)
         '''
         . Z-direction
-        . Unit V 
+        . Hartree Potential Energy, which is the electrons-(electrons+ions) interactions, Unit eV 
         '''
         l_box = self.l_box
         XY_Plane_Area = self.XY_Plane_Area
@@ -106,8 +104,8 @@ class ElecPotential_fourier_solvation:
             phi_frame = np.real(phi_frame)
             phi += phi_frame
             print(f'Frame {trajectory.index(frame)} Potential: done.')
-        phi = phi/len(trajectory) # Average of trajectory.
-        phi = -phi 
+        phi = phi/len(trajectory) # Average of trajectory, total electrostatic potential φ
+        phi = -phi # φ -> E(Hartree)
         return (z_coord, phi)
 
 class macro_avg:
