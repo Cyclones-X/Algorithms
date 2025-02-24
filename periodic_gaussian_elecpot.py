@@ -73,7 +73,7 @@ class ElecPotential_fourier_solvation:
         rho = rho/len(trajectory) # Average of trajectory. 
         return (z_coord, rho)
     
-    def Electrostatic_potential(self):  # Solve Poisson Equation  -∇²φ = ρ/ε₀, and multiply a electronic charge (-e)
+    def Electrostatic_potential(self):  # Solve Poisson Equation  -∇²φ = ρ/ε₀, and multiply an electronic charge (-e)
         '''
         . Z-direction
         . Hartree Potential Energy, which is the electrons-(electrons+ions) interactions, Unit eV 
