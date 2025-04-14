@@ -93,8 +93,8 @@ class ElecPotential_fourier_solvation:
             spread = np.array([spread_dict[s] for s in atoms.symbols])
             charge = np.array([charge_dict[s] for s in atoms.symbols])
             # Calculate Electrostatic Potential with Fourier Series Expansion
-
             phi_frame = np.zeros(len(self.z_coord), dtype=np.complex128)
+            # k should not equal to 0
             for nk in np.concatenate((np.arange(-self.n_k_vectors, 0), np.arange(1, self.n_k_vectors+1))):
                 k_n = 2*np.pi/l_box*nk
                 ft_trans_density = 1/XY_Plane_Area*charge*np.exp(-1j*k_n*mu_z)*np.exp(-k_n**2/4*(2*spread**2))
