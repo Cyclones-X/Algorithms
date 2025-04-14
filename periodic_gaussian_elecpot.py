@@ -105,7 +105,7 @@ class ElecPotential_fourier_solvation:
             phi += phi_frame
             print(f'Frame {trajectory.index(frame)} Potential: done.')
         phi = phi/len(trajectory) # Average of trajectory, total electrostatic potential φ
-        phi = -phi # φ -> E(Hartree)
+        phi = -phi # Electrostatic Potential (φ) -> Hartree Potential (E), unit [V -> eV], etc.
         return (z_coord, phi)
 
 class macro_avg:  # A macroscopic average method for microscopic electrostatic potential data. This method is writen by taking a part from CP2KDATA. Refernce: https://robinzyb.github.io/cp2kdata/_modules/cp2kdata/cube/cube.html#Cp2kCube.get_mav 
