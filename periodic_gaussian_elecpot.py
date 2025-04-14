@@ -108,7 +108,7 @@ class ElecPotential_fourier_solvation:
         phi = -phi # φ -> E(Hartree)
         return (z_coord, phi)
 
-class macro_avg:
+class macro_avg:  # A macroscopic average method using heaviside function filter. This method is writen by taking a part from CP2KDATA. Refernce: https://robinzyb.github.io/cp2kdata/_modules/cp2kdata/cube/cube.html#Cp2kCube.get_mav 
     def __init__(
             self,
             input_coord: np.ndarray,
