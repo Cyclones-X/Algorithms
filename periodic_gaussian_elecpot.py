@@ -3,6 +3,7 @@ import ase
 import ase.atom
 import numpy as np
 from ase import io
+from scipy import fft
 from scipy import constants
 from ase.geometry.cell import cellpar_to_cell
 
